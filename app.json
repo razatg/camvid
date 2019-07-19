@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "RemoteLearn",
+    "slug": "rlapp",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "android":{"package":"in.remotelearn",
+      "versionCode":3,
+      "permissions":[
+        "CAMERA",
+        "RECORD_AUDIO",
+      ],
+      "googleServicesFile":"./google-services.json",
+      "intentFilters":[{
+        "action":"VIEW",
+        "data":[
+          {
+            "scheme":"https",
+            "host":"youtu.be",
+          },
+        ],
+        "category":["BROWSABLE","DEFAULT"],
+      }],
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "notification":{
+      "icon":"./assets/noticeIcon.png",
+      "androidMode":"collapse",
+      "androidCollapsedTitle":"Upgrade with: RemoteLearn",
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
