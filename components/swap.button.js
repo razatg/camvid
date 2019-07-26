@@ -13,7 +13,7 @@ export default class SwapButton extends React.Component {
         color = "#000000"
         size = {32}
         style = {styles.swapIcon}
-        onPress={() => this.props.navigation.toggleDrawer()}
+        onPress={this.props.swapForm}
       />
     )
   }

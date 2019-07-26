@@ -19,7 +19,7 @@ export default class MovableCameraPage extends React.Component {
     hasCameraPermission: null,
     type: Camera.Constants.Type.front,
     isFocused: true,
-    big: false,
+    form: 'movable',
     x: new Animated.Value(0),
     y: new Animated.Value(0),
     viewSize: 200,
@@ -28,7 +28,7 @@ export default class MovableCameraPage extends React.Component {
   componentWillMount() {
     const { x, y } = this.state
     x.setValue(width - this.state.viewSize)
-    y.setValue(40)
+    y.setValue(80)
     this.Responder = createResponder({
       onStartShouldSetResponder: () => true,
       onStartShouldSetResponderCapture: () => true,
@@ -86,6 +86,19 @@ export default class MovableCameraPage extends React.Component {
       ToastAndroid.CENTER);
   }
 
+  handleSwapForm = () => {
+    if (this.state.form == 'halfCamRow'){
+      this.setState({form:'movable'});
+    }
+    else{
+      this.setState({form:'halfCamRow'})
+    }
+ 
+    <NavigationEvents
+            onWillFocus={payload => { this.setState({ isFocused: true }) }}
+            onDidBlur={payload => { this.setState({ isFocused: false }) }} />
+  }
+
   async requestPermission() {
     const camera = await Permissions.askAsync(Permissions.CAMERA);
     const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
@@ -129,17 +142,15 @@ export default class MovableCameraPage extends React.Component {
         />
       );
     }
-    else {
+    else if (this.state.form == 'halfCamRow')  {
       return (
-       <View> 
+       <React.Fragment> 
        <View style = {styles.mainContainerHalfCamRow}>
-        <View style = {styles.rightSqHalfCamRow}>
             <Camera
               style={styles.leftSqHalfCamRow}
               type={this.state.type}
               ref={camera => this.camera = camera}
             />
-           </View> 
           <View style={styles.rightSqHalfCamRow}>
           <WebView
               javaScriptEnabled = {true}
@@ -149,10 +160,39 @@ export default class MovableCameraPage extends React.Component {
           </View>
        
         </View>
-        <SwapButton/>
+        <SwapButton swapForm = {this.handleSwapForm}/>
+        <ToolBar onShortCapturew={this.handleShortCapture} />
+        <NavigationEvents
+            onWillFocus={payload => { this.setState({ isFocused: true }) }}
+            onDidBlur={payload => { this.setState({ isFocused: false }) }} />
         
-      </View>
+      </React.Fragment>
       );
     }
+    else {
+      return (
+       <React.Fragment> 
+       <View>
+            <Camera
+              style={styles.fcamera}
+              type={this.state.type}
+              ref={camera => this.camera = camera}
+            />
+          </View>
+          <SwapButton swapForm = {this.handleSwapForm}/>
+          <ToolBar onShortCapture={this.handleShortCapture} />
+          <NavigationEvents
+            onWillFocus={payload => { this.setState({ isFocused: true }) }}
+            onDidBlur={payload => { this.setState({ isFocused: false }) }} />
+          <Animated.View
+            {...this.Responder}
+            resizeMode={'contain'}
+            style={[styles.wvideo, imageStyle]} >
+            <SVideoWeb size={this.state.viewSize} />
+          </Animated.View>
+
+      </React.Fragment>
+      );
+    } 
   };
 }

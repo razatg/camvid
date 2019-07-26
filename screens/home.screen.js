@@ -10,12 +10,12 @@ import styles from '../src/styles'
 export default class HomeScreen extends React.Component {
   render() {
     return (
-     <View>
+     <React.Fragment>
        
        <MovableCameraPage />
        <MenuButton navigation = {this.props.navigation}/>
      
-     </View>
+     </React.Fragment>
     );
   }
 }
