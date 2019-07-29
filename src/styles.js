@@ -107,13 +107,32 @@ export default StyleSheet.create({
  leftSqHalfCamRow:{
      flex:1,
      aspectRatio:9/16,
-     backgroundColor:"blue",
+     backgroundColor:"transparent",
  },
  rightSqHalfCamRow:{
      flex:1,
      aspectRatio: 9/16,
      backgroundColor:"green"
  },
+ mainContainerHalfCamCol:{
+  flex:1,
+  left:5,
+  right:5,
+  alignItems:"center",
+  justifyContent:"center",
+  backgroundColor:"white",
+},
+topSqHalfCamCol:{
+  flex:1,
+  aspectRatio:4/3,
+  marginTop:80,
+  backgroundColor:"transparent",
+},
+bottomSqHalfCamCol:{
+  flex:1,
+  aspectRatio: 4/3,
+  backgroundColor:"green"
+},
 }
 
 );
