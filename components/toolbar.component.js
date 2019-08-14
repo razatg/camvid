@@ -12,7 +12,7 @@ export default ({capturing = false, onShortCapture,onSkipBackward, onSkipForward
         <TouchableOpacity onPress={onSkipBackward}>
           <Ionicons
             name="md-skip-backward"
-            color="black"
+            color="red"
             size={30}
           />
         </TouchableOpacity>
@@ -28,7 +28,7 @@ export default ({capturing = false, onShortCapture,onSkipBackward, onSkipForward
         <TouchableOpacity onPress={onSkipForward}>
           <Ionicons
             name="md-skip-forward"
-            color = "black"
+            color = "red"
             size = {30}
           />
         </TouchableOpacity>

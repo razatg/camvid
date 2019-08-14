@@ -1,5 +1,6 @@
 import React from 'react';
-import {WebView, View, AppState, Text} from 'react-native';
+import {WebView, View, AppState, Text, TouchableOpacity} from 'react-native';
+import {StackActions, NavigationActions} from 'react-navigation';
 
 import styles from '../src/styles';
 
@@ -51,14 +52,33 @@ export default class WatchVideo extends React.Component{
 
                 }
                 </View>
-                <Text 
-                style = {{bottom:48, right:55, position:"absolute", alignItems:"center"}
-                }>Skip to learn</Text>
+                <TouchableOpacity 
+                style = {{bottom:48, right:55, position:"absolute", alignItems:"center"}}
+                onPress = {() => {
+                    const resetActions = StackActions.reset({
+                    index:0,
+                    actions:[NavigationActions.navigate({
+                    routeName:'Learn',
+                    params:{vId:vid,vUrl:vurl,vForm:vform,vLis:vlis},
+                    })],
+                    });
+                    this.props.navigation.dispatch(resetActions)}}
+                >
+                  <Text>Skip to learn</Text>
+                </TouchableOpacity>
                 <Ionicons 
                 name = 'md-fastforward'
                 size = {32}
                 style = {{bottom:40, right:20, position:"absolute"}}
-                onPress = {() => {this.props.navigation.navigate('Learn', {vId:vid,vUrl:vurl,vForm:vform,vLis:vlis})}}
+                onPress = {() => {
+                    const resetActions = StackActions.reset({
+                    index:0,
+                    actions:[NavigationActions.navigate({
+                    routeName:'Learn',
+                    params:{vId:vid,vUrl:vurl,vForm:vform,vLis:vlis},
+                    })],
+                    });
+                    this.props.navigation.dispatch(resetActions)}}
             />
             </View>
         );

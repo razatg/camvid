@@ -30,11 +30,15 @@ export default class LearnVideo extends React.Component {
     
     if (prevVidId >= 0 ) 
       {
-        prevVidLink = vlis[prevVidId]["watch"];
+        prevVidYtid = vlis[prevVidId]["ytId"];
         prevVidForm =  vlis[prevVidId]["form"];
         const resetActions = StackActions.reset({
           index:0,
-          actions:[NavigationActions.navigate({routeName:'Learn'}, {vId:prevVidId,vUrl:prevVidLink, vForm:prevVidForm, vLis:vlis })]
+          actions:[NavigationActions.navigate({
+            routeName:'Learn',
+            params:{vId:prevVidId,vUrl:'https://www.youtube.com/embed/'+prevVidYtid, vForm:prevVidForm, vLis:vlis},
+          })
+          ],
         });
         this.props.navigation.dispatch(resetActions);
       }
@@ -54,9 +58,18 @@ export default class LearnVideo extends React.Component {
     
     if (nextVidId < vlis.length) 
       {
-        nextVidLink = vlis[nextVidId]["watch"];
+        nextVidYtId = vlis[nextVidId]["ytId"];
         nextVidForm =  vlis[nextVidId]["form"];
-        this.props.navigation.navigate('Watch',{vId:nextVidId,vUrl:nextVidLink, vForm:nextVidForm, vLis:vlis });
+        const resetActions = StackActions.reset({
+          index:0,
+          actions:[NavigationActions.navigate({
+            routeName:'Watch',
+            params:{vId:nextVidId,vUrl:'https://www.youtube.com/embed/'+nextVidYtId, vForm:nextVidForm, vLis:vlis },
+          })
+
+          ],
+        });
+        this.props.navigation.dispatch(resetActions);
       }
     else {
       ToastAndroid.showWithGravity('Well Done, That was the last Video in the Lesson!',

@@ -35,7 +35,7 @@ const AppStackNavigator = createStackNavigator(
               onPress={() => navigation.toggleDrawer()}
             />
           ),
-          title:'Lesson Schedule',
+          title:'Yoga Lesson Schedule',
         }
       },
       Watch: {
