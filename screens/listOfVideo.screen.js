@@ -7,6 +7,8 @@ import * as Font from 'expo-font';
 
 import firebase from '../firebaseInit';
 
+var thumb = require('../assets/noticeIcon.png');
+
 
 
 export default class ListVideo extends React.Component {
@@ -123,6 +125,7 @@ export default class ListVideo extends React.Component {
               <Card>
               <CardItem>
                 <Left>
+                <Thumbnail source={thumb} />
                   <Body>
                     <Text>{item.text}</Text>
                     <Text note>{item.textNote}</Text>
