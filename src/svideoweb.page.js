@@ -49,7 +49,7 @@ export default class SVideoWeb extends React.Component {
             ref={(ref) => { this.videoPlayer = ref; }}
             style={{ width: size, height: size }}
             scalesPageToFit={true}
-            source={{ uri: this.state.url }}
+            source={{ uri: this.props.vUrl }}
             onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest} //for iOS
             onNavigationStateChange={this.onShouldStartLoadWithRequest} //for Android
           /> : <View></View>}
@@ -64,7 +64,7 @@ export default class SVideoWeb extends React.Component {
         <WebView
               javaScriptEnabled = {true}
               //source = {{ uri: this.state.url }}
-              source={{ html: '<html><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><iframe src="'+ this.state.url +'" + "?modestbranding=0&playsinline=0&showinfo=0&rel=0" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe></html>'}} 
+              source={{ html: '<html><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><iframe src="'+ this.props.vUrl +'" + "modestbranding=0&playsinline=0&showinfo=0&rel=0" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe></html>'}} 
              />: <View></View>}
         </View>
       );
@@ -77,7 +77,7 @@ export default class SVideoWeb extends React.Component {
         <WebView
               javaScriptEnabled = {true}
               //source = {{ uri: this.state.url }}
-              source={{ html: '<html><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><iframe src="'+ this.state.url +'" + "?modestbranding=0&playsinline=0&showinfo=0&rel=0" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe></html>'}} 
+              source={{ html: '<html><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><iframe src="'+ this.props.vUrl +'" + "?autoplay=1&modestbranding=0&playsinline=0&showinfo=0&rel=0" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe></html>'}} 
              />: <View></View>}
         </View>
       );

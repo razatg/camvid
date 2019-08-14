@@ -2,9 +2,11 @@ import React from 'react';
 import {Platform, Dimensions} from 'react-native';
 import {createDrawerNavigator, createAppContainer, withNavigation} from 'react-navigation';
 
-import HomeScreen from '../screens/home.screen';
 import UpgradeScreen from '../screens/upgrade.screen';
 import AboutScreen from '../screens/about.screen';
+import ListVideo from '../screens/listOfVideo.screen';
+import WatchVideo from '../screens/watch.screen';
+import LearnVideo from '../screens/learn.screen';
 
 const WIDTH = Dimensions.get("window").width;
 
@@ -13,8 +15,8 @@ const DrawerConfig = {
 }
 
 const DrawerNavigator = createDrawerNavigator({
-  Home:{
-    screen: HomeScreen
+  Learn:{
+    screen: LearnVideo
   },
   Upgrade:{
     screen: UpgradeScreen,
@@ -26,8 +28,13 @@ const DrawerNavigator = createDrawerNavigator({
     screen: AboutScreen,
     contentOptions: {
       headerTitle:'About',
-    }
+    },
   },
+  Lessons:{
+    screen:ListVideo,
+
+  },
+  Watch: WatchVideo,
 },
 DrawerConfig);
 

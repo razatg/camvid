@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, Alert, ToastAndroid, TouchableOpacity, Dimensions, Animated, WebView } from 'react-native';
+import { View, Text, Alert,TouchableOpacity, Dimensions, Animated, WebView } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import { NavigationEvents } from 'react-navigation';
 
 import SVideoWeb from './svideoweb.page';
-import SwapButton from '../components/swap.button';
 import ToolBar from '../components/toolbar.component';
 
 import { createResponder } from 'react-native-gesture-responder'
@@ -14,6 +13,11 @@ const { width, height } = Dimensions.get('window');
 import styles from './styles';
 
 export default class MovableCameraPage extends React.Component {
+  
+  constructor(props){
+    super(props);
+  }
+    
   camera = null;
   state = {
     hasCameraPermission: null,
@@ -80,23 +84,7 @@ export default class MovableCameraPage extends React.Component {
       this.setState({ viewSize: size })
   }
 
-  handleShortCapture = () => {
-    ToastAndroid.showWithGravity('Only the Pro vesion has the Recording Feature. Pls Upgrade!',
-      ToastAndroid.SHORT,
-      ToastAndroid.CENTER);
-  }
-
-  handleSwapForm = () => {
-    if (this.state.form == 'halfCamRow'){
-      this.setState({form:'halfCamCol'});
-    }
-    else if (this.state.form =='halfCamCol'){
-      this.setState({form:'movable'})
-    }
-    else{
-      this.setState({form:'halfCamRow'})
-    }
-  }
+  
 
   async requestPermission() {
     const camera = await Permissions.askAsync(Permissions.CAMERA);
@@ -126,6 +114,7 @@ export default class MovableCameraPage extends React.Component {
     } = this.state
     const imageStyle = { left: x, top: y }
 
+
     const { hasCameraPermission, focusedScreen } = this.state;
     if (hasCameraPermission === null) {
       return <View />;
@@ -141,7 +130,7 @@ export default class MovableCameraPage extends React.Component {
         />
       );
     }
-    else if (this.state.form == 'halfCamRow')  {
+    else if (this.props.vForm == 'halfCamRow')  {
       return (
        <React.Fragment> 
        <View style = {styles.mainContainerHalfCamRow}>
@@ -153,11 +142,13 @@ export default class MovableCameraPage extends React.Component {
               /> 
              {this.props.children}
             </View>
-            <SVideoWeb formp = "halfCamRow" />
+            <SVideoWeb 
+              formp = "halfCamRow" 
+              vUrl = {vurl}
+            />
        
         </View>
-        <SwapButton swapForm = {this.handleSwapForm}/>
-        <ToolBar onShortCapture ={this.handleShortCapture} />
+       
         <NavigationEvents
             onWillFocus={payload => { this.setState({ isFocused: true }) }}
             onDidBlur={payload => { this.setState({ isFocused: false }) }} />
@@ -165,7 +156,7 @@ export default class MovableCameraPage extends React.Component {
       </React.Fragment>
       );
     }
-    else if (this.state.form == 'movable') {
+    else if (this.props.vForm == 'movable') {
       return (
        <React.Fragment> 
        <View style={styles.fcamera}>
@@ -176,8 +167,7 @@ export default class MovableCameraPage extends React.Component {
             />
             {this.props.children}
           </View>
-          <SwapButton swapForm = {this.handleSwapForm}/>
-          <ToolBar onShortCapture={this.handleShortCapture} />
+         
           <NavigationEvents
             onWillFocus={payload => { this.setState({ isFocused: true }) }}
             onDidBlur={payload => { this.setState({ isFocused: false }) }} />
@@ -187,17 +177,20 @@ export default class MovableCameraPage extends React.Component {
             style={[styles.wvideo, imageStyle]} >
             <SVideoWeb
              formp = "movable"
+             vUrl = {vurl}
              size={this.state.viewSize} />
           </Animated.View>
 
       </React.Fragment>
       );
     }
-    else if (this.state.form == 'halfCamCol')  {
+    else if (this.props.vForm == 'halfCamCol')  {
       return (
        <React.Fragment> 
        <View style = {styles.mainContainerHalfCamCol}>
-            <SVideoWeb formp = "halfCamCol" />
+            <SVideoWeb 
+            formp = "halfCamCol"
+            vUrl = {vurl} />
             <View style = {styles.bottomSqHalfCamCol}>
               <Camera
                 style={styles.bottomSqHalfCamCol}
@@ -207,8 +200,6 @@ export default class MovableCameraPage extends React.Component {
              {this.props.children}
             </View>
         </View>
-        <SwapButton swapForm = {this.handleSwapForm}/>
-        <ToolBar onShortCapture ={this.handleShortCapture} />
         <NavigationEvents
             onWillFocus={payload => { this.setState({ isFocused: true }) }}
             onDidBlur={payload => { this.setState({ isFocused: false }) }} />

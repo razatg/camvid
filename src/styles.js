@@ -31,13 +31,13 @@ export default StyleSheet.create({
   menuIcon: {
     zIndex: 9,
     position: 'absolute',
-    top: 40,
+    top: 15,
     left: 20,
   },
   swapIcon: {
     zIndex: 9,
     position: 'absolute',
-    top: 40,
+    top: 20,
     right: 20,
   },
   tcontainer: {
@@ -68,9 +68,8 @@ export default StyleSheet.create({
     zIndex: 9,
     width: winWidth,
     position: 'absolute',
-    height: 100,
-    top: winHeight * 0.85,
-    bottom: 10,
+    height: 80,
+    bottom:2,
   },
   alignCenter: {
     flex: 1,
@@ -86,14 +85,14 @@ export default StyleSheet.create({
 
   },
   captureBtnActive: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
   },
   captureBtnInternal: {
-    width: 76,
-    height: 76,
+    width: 56,
+    height: 56,
     borderWidth: 2,
-    borderRadius: 76,
+    borderRadius: 36,
     borderColor: "transparent",
     backgroundColor: "red",
   },
@@ -116,8 +115,6 @@ export default StyleSheet.create({
  },
  mainContainerHalfCamCol:{
   flex:1,
-  left:5,
-  right:5,
   alignItems:"center",
   justifyContent:"center",
   backgroundColor:"white",
@@ -125,13 +122,23 @@ export default StyleSheet.create({
 topSqHalfCamCol:{
   flex:1,
   aspectRatio:4/3,
-  marginTop:80,
   backgroundColor:"transparent",
 },
 bottomSqHalfCamCol:{
   flex:1,
   aspectRatio: 4/3,
   backgroundColor:"green"
+},
+watchContainer:{
+  flex:1,
+  flexDirection:"row",
+  alignItems:"center",
+  justifyContent:"center",
+  backgroundColor:"white",
+},
+watchVid:{
+  flex:1,
+  aspectRatio:1,
 },
 }
 
