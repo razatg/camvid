@@ -49,7 +49,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   pcontaineer: {
-    top: 60,
+    top: 10,
     left: 20,
     marginRight: 20,
     alignItems: 'center',

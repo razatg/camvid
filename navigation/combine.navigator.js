@@ -1,4 +1,3 @@
-import React from 'react';
 import {Dimensions} from 'react-native';
 
 import {createDrawerNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
@@ -8,36 +7,23 @@ import AboutScreen from '../screens/about.screen';
 import ListVideo from '../screens/listOfVideo.screen';
 import WatchVideo from '../screens/watch.screen';
 import LearnVideo from '../screens/learn.screen';
-
-import {Ionicons} from '@expo/vector-icons';
-import MenuButton from '../components/menu.button';
-import SwapButton from '../components/swap.button';
-import styles from '../src/styles';
+import HowItWorksScreen from '../screens/howItWorks.screen'
 
 
-const DrawerNavigator = createDrawerNavigator({
-    Lessons:{screen:ListVideo},
-    Upgrade:{screen:UpgradeScreen},
-    About:{screen:AboutScreen},
-});
+
+const WIDTH = Dimensions.get("window").width;
+
+const DrawerConfig = {
+  drawerWidth:WIDTH*0.83,
+}
+
+
 
 const AppStackNavigator = createStackNavigator(
     {
       Home: {
-        screen:DrawerNavigator,
-        navigationOptions:{
-          headerLeft:(
-            <Ionicons
-              name = "md-menu"
-              color = "#000000"
-              size = {32}
-              style = {styles.menuIcon}
-              onPress={() => navigation.toggleDrawer()}
-            />
-          ),
-          title:'Yoga Lesson Schedule',
-        }
-      },
+        screen:ListVideo,
+        },
       Watch: {
         screen:WatchVideo,
         navigationOptions:{
@@ -48,10 +34,28 @@ const AppStackNavigator = createStackNavigator(
         screen:LearnVideo,
         navigationOptions:{
           title:"Do and Learn",
-          headerRight:(
-            <SwapButton />
-          ),
         },
+      },
+      Upgrade:{
+        screen:UpgradeScreen,
+        navigationOptions:{
+          title:"Upgrade Now!"
+        },
+
+      },
+      About:{
+        screen: AboutScreen,
+        navigationOptions:{
+          title:"About Us"
+        },
+
+      },
+      How:{
+        screen:HowItWorksScreen,
+        navigationOptions:{
+          title:"How It Works"
+        }
+
       },
     },
     {
@@ -63,6 +67,20 @@ const AppStackNavigator = createStackNavigator(
 );
 
 
+const DrawerNavigator = createDrawerNavigator({
+  Home:{
+    screen:AppStackNavigator,
+  },
+  How:{screen:HowItWorksScreen,
+    navigationOptions:{
+      title:'How It Works'
+    },
+  },
+  Upgrade:{screen:UpgradeScreen},
+  About:{screen:AboutScreen},
+},DrawerConfig);
 
 
-export default createAppContainer(AppStackNavigator);
+
+
+export default createAppContainer(DrawerNavigator);

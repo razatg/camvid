@@ -1,14 +1,10 @@
 import React from 'react';
-import { StatusBar ,StyleSheet, Text, View, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import {StackActions, NavigationActions} from 'react-navigation';
 
 import MovableCameraPage from '../src/movableCamera.page';
-import HalfCameraRow from '../src/halfCameraRow.page';
-import ListVideo from './listOfVideo.screen'
 
-import MenuButton from '../components/menu.button';
 import ToolBar from '../components/toolbar.component';
-import styles from '../src/styles'
 
 export default class LearnVideo extends React.Component {
   

@@ -1,8 +1,6 @@
 import React from 'react';
 import { View,WebView, KeyboardAvoidingView, Text, AppState } from 'react-native';
-import { Notifications } from 'expo';
 
-import firebase from '../firebaseInit'
 
 import styles from './styles';
 
@@ -13,16 +11,6 @@ export default class SVideoWeb extends React.Component {
       url: '',
       appState: AppState.currentState,
     }
-  }
-
-  componentWillMount() {
-
-    firebase.database().ref('url').on('value', (snapshot) => {
-      if (snapshot.val() != "")
-        this.setState({ url: snapshot.val() })
-      else
-        this.setState({ url: "https://www.youtube.com/watch?v=1xRX1MuoImw&t=71s" })
-    });
   }
 
   componentDidMount(){

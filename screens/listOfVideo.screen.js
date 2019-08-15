@@ -1,17 +1,33 @@
 import React from 'react';
-import { StyleSheet, View, WebView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import {Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right} from 'native-base';
+import { View, Image,ActivityIndicator } from 'react-native';
+import {Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right} from 'native-base';
 
 import {Video, AppLoading} from 'expo';
 import * as Font from 'expo-font';
+import {Ionicons} from '@expo/vector-icons';
 
 import firebase from '../firebaseInit';
+import MenuButton from '../components/menu.button'
 
 var thumb = require('../assets/noticeIcon.png');
 
 
 
 export default class ListVideo extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+       title: "Yoga Routine - 45 mins",
+       headerLeft: (
+          <Ionicons
+             name="md-menu"
+             color="#000000"
+             size={25}
+             onPress={() => navigation.openDrawer()}
+             style={{ marginStart: 15 }}
+          />),
+    }
+ };
 
   constructor(props){
     super(props);
@@ -28,8 +44,6 @@ export default class ListVideo extends React.Component {
     firebase.database().ref('asana').once('value', (snapshot) => {
       if (snapshot.val() != ""){
         this.setState({ listOfVid: snapshot.val(), loading:"none" });
-        console.log(snapshot.val());
-
       } 
       else
         this.setState({ listOfVid: 
@@ -115,7 +129,7 @@ export default class ListVideo extends React.Component {
           <View style={{display:this.state.loading, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff'  }}>
             <ActivityIndicator
               animating ={true}
-              color = 'black'
+              color = 'green'
               size = 'large'
             />
           </View>

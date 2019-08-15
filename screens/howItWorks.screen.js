@@ -4,7 +4,7 @@ import {Text, View, Header, Linking} from 'react-native';
 import MenuButton from '../components/menu.button';
 import styles from '../src/styles';
 
-export default class AboutScreen extends React.Component{
+export default class HowItWorks extends React.Component{
 
   static navigationOptions = {
     title: 'About',
@@ -16,12 +16,11 @@ export default class AboutScreen extends React.Component{
     return(
       <View style={styles.container}>
         <Text style = {styles.pcontaineer}>
-          We created this app out of our own need to learn about the Yoga asana
-          or a Dance move or the Make up style from an online video but then not knowing if you were doing it right. {'\n'}{'\n'}
+          Its very simple! {'\n'}{'\n'}
 
-          This App gives immediate feedback through the phone camera used as mirror,
-          running in background and the video in the same frame so that you could
-          look at the video and then yourself at the same time for best learning experience.{'\n'}{'\n'}
+          Just place the your Mobile Phone on an elevated platform like top of a few Books or use a clip(like the one used in a car) in front of 
+          your Yoga Mat and just follow the Yoga Routine. Belive you me, with this little trouble you will find the expereince of leaning way better
+          than an offline yoga class.{'\n'}{'\n'}
 
           If you have any feedback or feature request join this{' '}
             <Text style = {styles.linkText} onPress = {() => Linking.openURL('https://chat.whatsapp.com/I0UuBT1Vul35qyjr92LnsN')}>

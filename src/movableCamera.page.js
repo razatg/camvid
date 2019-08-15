@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, Alert,TouchableOpacity, Dimensions, Animated, WebView } from 'react-native';
+import { View, Text, Alert, Dimensions, Animated } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import { NavigationEvents } from 'react-navigation';
 
 import SVideoWeb from './svideoweb.page';
-import ToolBar from '../components/toolbar.component';
 
 import { createResponder } from 'react-native-gesture-responder'
 
