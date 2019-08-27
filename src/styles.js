@@ -35,10 +35,7 @@ export default StyleSheet.create({
     left: 20,
   },
   swapIcon: {
-    zIndex: 9,
-    position: 'absolute',
-    top: 20,
-    right: 20,
+    right: 15,
   },
   tcontainer: {
     top: 45,

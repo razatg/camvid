@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Alert, Dimensions, Animated } from 'react-native';
-import { Camera, Permissions } from 'expo';
+import { Camera } from 'expo-camera';
+import * as Permissions from 'expo-permissions';
 import { NavigationEvents } from 'react-navigation';
 
 import SVideoWeb from './svideoweb.page';

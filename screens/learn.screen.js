@@ -1,16 +1,62 @@
 import React from 'react';
-import { ToastAndroid } from 'react-native';
+import { ToastAndroid, Button } from 'react-native';
 import {StackActions, NavigationActions} from 'react-navigation';
+import {Ionicons} from '@expo/vector-icons';
 
 import MovableCameraPage from '../src/movableCamera.page';
 
 import ToolBar from '../components/toolbar.component';
+import styles from '../src/styles';
+
+var ytPrefix = "https://www.youtube.com/embed/"
 
 export default class LearnVideo extends React.Component {
-  
+  static navigationOptions = ({navigation}) => { 
+    return {
+      title:"Do and Learn",
+      headerRight:(
+        <Ionicons
+          name = "md-swap"
+          color = "#000000"
+          size = {32}
+          onPress={navigation.getParam('handleSwap')}
+          style = {styles.swapIcon}
+       />
+      ),
+    }
+  }
+
+
   constructor(props){
     super(props);
+    this.state ={
+      vForm:this.props.navigation.getParam('vForm'),
+    }
   }
+
+
+  swapForm = () => {
+      currForm = this.state.vForm;
+      if ( currForm === 'halfCamCol')
+      {
+        this.setState({vForm:'halfCamRow'});
+      }
+      else if (currForm === 'halfCamRow'){
+        this.setState({vForm:'movable'});
+      }
+      else{
+        this.setState({vForm:'halfCamCol'});
+      }
+      ToastAndroid.showWithGravity('Changing Screen Layout.',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER);
+  }
+
+  componentDidMount(){
+    this.props.navigation.setParams({handleSwap:this.swapForm});
+  }
+
+
 
   handleShortCapture = () => {
     ToastAndroid.showWithGravity('Only the Pro vesion has the Recording Feature. Pls Upgrade!',
@@ -32,7 +78,7 @@ export default class LearnVideo extends React.Component {
           index:0,
           actions:[NavigationActions.navigate({
             routeName:'Learn',
-            params:{vId:prevVidId,vUrl:'https://www.youtube.com/embed/'+prevVidYtid, vForm:prevVidForm, vLis:vlis},
+            params:{vId:prevVidId,vUrl:ytPrefix+prevVidYtid, vForm:prevVidForm, vLis:vlis},
           })
           ],
         });
@@ -60,7 +106,7 @@ export default class LearnVideo extends React.Component {
           index:0,
           actions:[NavigationActions.navigate({
             routeName:'Watch',
-            params:{vId:nextVidId,vUrl:'https://www.youtube.com/embed/'+nextVidYtId, vForm:nextVidForm, vLis:vlis },
+            params:{vId:nextVidId,vUrl:ytPrefix+nextVidYtId, vForm:nextVidForm, vLis:vlis },
           })
 
           ],
@@ -77,13 +123,12 @@ export default class LearnVideo extends React.Component {
 
   render() {
     vurl = this.props.navigation.getParam('vUrl');
-    vform = this.props.navigation.getParam('vForm');
     return (
      <React.Fragment>
        
        <MovableCameraPage 
          vUrl = {vurl}
-         vForm = {vform}
+         vForm = {this.state.vForm}
        />
 
        <ToolBar 

@@ -5,6 +5,7 @@ import {createDrawerNavigator, createStackNavigator, createAppContainer} from 'r
 import UpgradeScreen from '../screens/upgrade.screen';
 import AboutScreen from '../screens/about.screen';
 import ListVideo from '../screens/listOfVideo.screen';
+import HomeScreen from '../screens/home.screen';
 import WatchVideo from '../screens/watch.screen';
 import LearnVideo from '../screens/learn.screen';
 import HowItWorksScreen from '../screens/howItWorks.screen'
@@ -22,8 +23,11 @@ const DrawerConfig = {
 const AppStackNavigator = createStackNavigator(
     {
       Home: {
-        screen:ListVideo,
+        screen:HomeScreen,
         },
+      List: {
+        screen:ListVideo,
+      },  
       Watch: {
         screen:WatchVideo,
         navigationOptions:{
@@ -32,9 +36,6 @@ const AppStackNavigator = createStackNavigator(
       },
       Learn:{
         screen:LearnVideo,
-        navigationOptions:{
-          title:"Do and Learn",
-        },
       },
       Upgrade:{
         screen:UpgradeScreen,

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "RemoteLearn",
+    "name": "YoMo Yoga",
     "slug": "rlapp",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "34.0.0",
     "android":{"package":"in.remotelearn",
-      "versionCode":3,
+      "versionCode":6,
       "permissions":[
         "CAMERA",
-        "RECORD_AUDIO",
+        "RECORD_AUDIO"
       ],
       "googleServicesFile":"./google-services.json",
       "intentFilters":[{
@@ -16,17 +16,16 @@
         "data":[
           {
             "scheme":"https",
-            "host":"youtu.be",
-          },
+            "host":"youtu.be"
+          }
         ],
-        "category":["BROWSABLE","DEFAULT"],
-      }],
-    },
+        "category":["BROWSABLE","DEFAULT"]
+      }]},
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -37,10 +36,10 @@
     "notification":{
       "icon":"./assets/noticeIcon.png",
       "androidMode":"collapse",
-      "androidCollapsedTitle":"Upgrade with: RemoteLearn",
+      "androidCollapsedTitle":"Upgrade with: RemoteLearn"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 12
     },
     "assetBundlePatterns": [
       "**/*"

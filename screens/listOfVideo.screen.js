@@ -10,24 +10,15 @@ import firebase from '../firebaseInit';
 import MenuButton from '../components/menu.button'
 
 var thumb = require('../assets/noticeIcon.png');
-
-
+var ytPrefix = "https://www.youtube.com/embed/"
 
 export default class ListVideo extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-       title: "Yoga Routine - 45 mins",
-       headerLeft: (
-          <Ionicons
-             name="md-menu"
-             color="#000000"
-             size={25}
-             onPress={() => navigation.openDrawer()}
-             style={{ marginStart: 15 }}
-          />),
+       title: navigation.getParam('listTitle'),
     }
- };
+ }
 
   constructor(props){
     super(props);
@@ -40,8 +31,8 @@ export default class ListVideo extends React.Component {
   }
 
   componentWillMount() {
-
-    firebase.database().ref('asana').once('value', (snapshot) => {
+    listname = this.props.navigation.getParam('listName');
+    firebase.database().ref(listname).once('value', (snapshot) => {
       if (snapshot.val() != ""){
         this.setState({ listOfVid: snapshot.val(), loading:"none" });
       } 
@@ -110,9 +101,10 @@ export default class ListVideo extends React.Component {
 
   async componentDidMount(){
     await Font.loadAsync({
-        Roboto: require('native-base/Fonts/Roboto.ttf'),
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+        Roboto: require('../node_modules/native-base/Fonts/Roboto.ttf'),
+        Roboto_medium: require('../node_modules/native-base/Fonts/Roboto_medium.ttf'),
       });
+    this.props.navigation.setParams({listTitle:this.props.navigation.getParam('listTitle')});    
     this.setState({isReady:true});
   } 
 
@@ -148,7 +140,7 @@ export default class ListVideo extends React.Component {
               </CardItem>
               <CardItem cardBody
                 button
-                onPress = {()=>{this.props.navigation.navigate('Watch', {vUrl:'https://www.youtube.com/embed/'+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid})}}
+                onPress = {()=>{this.props.navigation.navigate('Watch', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid})}}
                >
                 <Image
                   source = {{uri:'https://img.youtube.com/vi/'+item.ytId+'/hqdefault.jpg'}}
@@ -158,7 +150,7 @@ export default class ListVideo extends React.Component {
               <CardItem>
                 <Left>
                 <Button transparent 
-                  onPress = {() => {this.props.navigation.navigate('Learn', {vUrl:'https://www.youtube.com/embed/'+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid})}}>
+                  onPress = {() => {this.props.navigation.navigate('Learn', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid})}}>
                     <Icon active name ="md-videocam"/>
                     <Text>Watch yourself on Camera and Learn.</Text>
                    </Button>

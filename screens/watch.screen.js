@@ -45,6 +45,7 @@ export default class WatchVideo extends React.Component{
                 {
                 (this.state.appState == "active") ?
                   <WebView 
+                    //source = {{ uri: this.props.vUrl+"?autoplay=1&modestbranding=0&playsinline=0&showinfo=0&rel=0" }}
                     source = {{uri:vurl}}
                     style = {styles.watchVid}
                 /> 
