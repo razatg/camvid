@@ -53,7 +53,7 @@ export default class HomeScreen extends React.Component {
                         {
                             "id":0,
                             "listName":"asana",
-                            "imgLink":"",
+                            "imgLink":"https://img.youtube.com/vi/VWtHY710BL0/hqdefault.jpg",
                             "text":"Learn with beloved PM Modi",
                             "textNote":"Start Now!",
                             "cta":"List 0f 9 asanas to get you going"
@@ -61,7 +61,7 @@ export default class HomeScreen extends React.Component {
                         {
                             "id":2,
                             "listName":"weightLoss",
-                            "imgLink":"",
+                            "imgLink":"https://img.youtube.com/vi/WmSIMpIDa_A/hqdefault.jpg",
                             "text":"Weight Loss with Yoga",
                             "textNote":"Loose Now!",
                             "cta":"Looose and Prevent Weight Gain"
@@ -94,7 +94,7 @@ export default class HomeScreen extends React.Component {
         }else{
             Alert.alert(
                 'Oops !',
-                'Something went wrong',[
+                'Something went wrong. Pls try again.',[
                  {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},],
                 { cancelable: false });
         }

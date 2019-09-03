@@ -16,7 +16,7 @@ export default class LearnVideo extends React.Component {
       title:"Do and Learn",
       headerRight:(
         <Ionicons
-          name = "md-swap"
+          name = "md-repeat"
           color = "#000000"
           size = {32}
           onPress={navigation.getParam('handleSwap')}
