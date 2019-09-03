@@ -5,6 +5,7 @@ import {StackActions, NavigationActions} from 'react-navigation';
 import styles from '../src/styles';
 
 import {Ionicons} from '@expo/vector-icons'
+import Amplitude from '../amplitudeInit';
 
 
 
@@ -56,6 +57,7 @@ export default class WatchVideo extends React.Component{
                 <TouchableOpacity 
                 style = {{bottom:48, right:55, position:"absolute", alignItems:"center"}}
                 onPress = {() => {
+                    Amplitude.logEvent("WatchSkip")
                     const resetActions = StackActions.reset({
                     index:0,
                     actions:[NavigationActions.navigate({

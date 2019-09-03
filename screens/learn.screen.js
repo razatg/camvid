@@ -7,6 +7,7 @@ import MovableCameraPage from '../src/movableCamera.page';
 
 import ToolBar from '../components/toolbar.component';
 import styles from '../src/styles';
+import Amplitude from '../amplitudeInit'
 
 var ytPrefix = "https://www.youtube.com/embed/"
 
@@ -36,6 +37,7 @@ export default class LearnVideo extends React.Component {
 
 
   swapForm = () => {
+      Amplitude.logEvent("LearnSwapForm");
       currForm = this.state.vForm;
       if ( currForm === 'halfCamCol')
       {
@@ -59,6 +61,7 @@ export default class LearnVideo extends React.Component {
 
 
   handleShortCapture = () => {
+    Amplitude.logEvent("LearnShortCapture");
     ToastAndroid.showWithGravity('Only the Pro vesion has the Recording Feature. Pls Upgrade!',
       ToastAndroid.SHORT,
       ToastAndroid.CENTER);
@@ -66,6 +69,7 @@ export default class LearnVideo extends React.Component {
 
 
   handleSkipBackward = () => {
+    Amplitude.logEvent("LearnSkipBack");
     vid = this.props.navigation.getParam("vId");
     vlis = this.props.navigation.getParam("vLis");
     prevVidId = vid - 1;
@@ -85,6 +89,7 @@ export default class LearnVideo extends React.Component {
         this.props.navigation.dispatch(resetActions);
       }
     else {
+      Amplitude.logEvent("LearnSkipBackBegin");
       ToastAndroid.showWithGravity('That is the Frst Video in the Lesson!',
       ToastAndroid.SHORT,
       ToastAndroid.CENTER);
@@ -94,6 +99,7 @@ export default class LearnVideo extends React.Component {
 
 
   handleSkipForward = () => {
+    Amplitude.logEvent("LearnSkipFwd");
     vid = this.props.navigation.getParam("vId");
     vlis = this.props.navigation.getParam("vLis");
     nextVidId = vid+1;
@@ -114,6 +120,7 @@ export default class LearnVideo extends React.Component {
         this.props.navigation.dispatch(resetActions);
       }
     else {
+      Amplitude.logEvent("LearnSkipFwdEnd");
       ToastAndroid.showWithGravity('Well Done, That was the last Video in the Lesson!',
       ToastAndroid.SHORT,
       ToastAndroid.CENTER);
@@ -122,6 +129,7 @@ export default class LearnVideo extends React.Component {
   }
 
   render() {
+    Amplitude.logEvent('LearnLoad')
     vurl = this.props.navigation.getParam('vUrl');
     return (
      <React.Fragment>

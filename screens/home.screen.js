@@ -8,7 +8,8 @@ import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
 
 import firebase from '../firebaseInit';
-import MenuButton from '../components/menu.button'
+import Amplitude from '../amplitudeInit';
+
 
 
 var thumb = require('../assets/noticeIcon.png');
@@ -144,8 +145,11 @@ export default class HomeScreen extends React.Component {
                         <Item inlineLabel>
                           <Input placeholder = "Email/Phone" onChangeText ={(contactDetails) => this.setState({contactDetails})}/>
                           <Button info 
-                           onPress = {()=> this.postContact(this.state.contactDetails)}
-                          >
+                           onPress = {()=> {
+                               Amplitude.logEvent('LiveRegister');
+                               this.postContact(this.state.contactDetails);
+                               }
+                               }>
                             <Text>I'am In</Text>
                         </Button>
                         </Item>
@@ -168,7 +172,11 @@ export default class HomeScreen extends React.Component {
                          </CardItem>
                          <CardItem cardBody 
                          button
-                         onPress = {() => {this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text})}}>
+                         onPress = {() => {
+                             Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"img"})
+                             this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text});
+                             }
+                             }>
                              <Image
                                  source ={{uri:item.imgLink}}
                                  style = {{height:200, width:null, flex:1}}
@@ -177,7 +185,11 @@ export default class HomeScreen extends React.Component {
                          <CardItem>
                             <Left>
                               <Button transparent 
-                               onPress = {() => {this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text})}}>
+                               onPress = {() => {
+                                   Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"cta"})
+                                   this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text})
+                                   }
+                                   }>
                                 <Icon active name ="md-play"/>
                                 <Text>{item.cta}</Text>
                               </Button>

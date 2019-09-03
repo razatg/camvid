@@ -7,7 +7,7 @@ import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
 
 import firebase from '../firebaseInit';
-import MenuButton from '../components/menu.button'
+import Amplitude from '../amplitudeInit';
 
 var thumb = require('../assets/noticeIcon.png');
 var ytPrefix = "https://www.youtube.com/embed/"
@@ -140,8 +140,11 @@ export default class ListVideo extends React.Component {
               </CardItem>
               <CardItem cardBody
                 button
-                onPress = {()=>{this.props.navigation.navigate('Watch', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid})}}
-               >
+                onPress = {()=>{
+                  Amplitude.logEventWithProperties('ListOfVidCard',{carName:item.text, typeTouch:"img"})
+                  this.props.navigation.navigate('Watch', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid});
+                  }
+                  }>
                 <Image
                   source = {{uri:'https://img.youtube.com/vi/'+item.ytId+'/hqdefault.jpg'}}
                   style = {{height:200, width:null, flex:1}}
@@ -150,7 +153,11 @@ export default class ListVideo extends React.Component {
               <CardItem>
                 <Left>
                 <Button transparent 
-                  onPress = {() => {this.props.navigation.navigate('Learn', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid})}}>
+                  onPress = {() => {
+                    Amplitude.logEventWithProperties("ListofVidCard",{cardName:item.text, typeTouch:"cta"})
+                    this.props.navigation.navigate('Learn', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid});
+                    }
+                    }>
                     <Icon active name ="md-videocam"/>
                     <Text>Watch yourself on Camera and Learn.</Text>
                    </Button>
