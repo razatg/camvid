@@ -11,7 +11,7 @@ import firebase from '../firebaseInit';
 import Amplitude from '../amplitudeInit';
 
 
-
+var ytPrefix = "https://www.youtube.com/embed/";
 var thumb = require('../assets/noticeIcon.png');
 
 export default class HomeScreen extends React.Component {
@@ -37,7 +37,8 @@ export default class HomeScreen extends React.Component {
             isReady:false,
             loading:"flex",
             contactDetails:null,
-            isFormSubmited:false
+            isFormSubmited:false,
+            listOfVid:[],
         }
     }
 
@@ -72,6 +73,16 @@ export default class HomeScreen extends React.Component {
             }
 
         });
+        vidLis = [];
+        this.state.homeCards.map((item, index)=>{
+            console.log('didMount');
+            firebase.database().ref(item.listName).once('value', (snapshot) =>{
+                vidLis.push(snapshot.val());
+                console.log(vidLis);
+            })
+        });
+        this.setState({listOfVid:vidLis});
+        console.log(this.state.listOfVid);
     }
 
     async componentDidMount(){
@@ -99,6 +110,14 @@ export default class HomeScreen extends React.Component {
                  {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},],
                 { cancelable: false });
         }
+    }
+
+    getListOfVid = (key) =>{
+        firebase.database().ref(key).once('value', (snapshot)=>{
+            listOfVid = snapshot.val();
+        });
+        return listOfVid;
+       
     }
 
     render(){
@@ -186,12 +205,15 @@ export default class HomeScreen extends React.Component {
                             <Left>
                               <Button transparent 
                                onPress = {() => {
-                                   Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"cta"})
-                                   this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text})
+                                   //Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"cta"});
+                                   //this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text})
+                                   
+                                   console.log(this.state.listOfVid);
+                                   //this.props.navigation.navigate('Learn', {vUrl:ytPrefix+vidLis[0].ytId, vId:0, vForm:vidLis[0].form ,vLis:vidLis});
                                    }
                                    }>
-                                <Icon active name ="md-play"/>
-                                <Text>{item.cta}</Text>
+                                <Icon active name ="md-videocam"/>
+                                <Text>Watch yourself on Camera and Learn.</Text>
                               </Button>
                             </Left>
                          </CardItem>
