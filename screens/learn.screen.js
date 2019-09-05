@@ -7,7 +7,7 @@ import MovableCameraPage from '../src/movableCamera.page';
 
 import ToolBar from '../components/toolbar.component';
 import styles from '../src/styles';
-import Amplitude from '../amplitudeInit'
+import Amplitude from '../init/amplitudeInit'
 
 var ytPrefix = "https://www.youtube.com/embed/"
 

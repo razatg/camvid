@@ -5,7 +5,7 @@ import {StackActions, NavigationActions} from 'react-navigation';
 import styles from '../src/styles';
 
 import {Ionicons} from '@expo/vector-icons'
-import Amplitude from '../amplitudeInit';
+import Amplitude from '../init/amplitudeInit';
 
 
 

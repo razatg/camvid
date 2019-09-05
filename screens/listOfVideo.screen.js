@@ -6,8 +6,8 @@ import {Video, AppLoading} from 'expo';
 import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
 
-import firebase from '../firebaseInit';
-import Amplitude from '../amplitudeInit';
+import firebase from '../init/firebaseInit';
+import Amplitude from '../init/amplitudeInit';
 
 var thumb = require('../assets/noticeIcon.png');
 var ytPrefix = "https://www.youtube.com/embed/"

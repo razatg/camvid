@@ -1,7 +1,6 @@
 import React from 'react';;
 import {Text, View, Header, Linking} from 'react-native';
 
-import MenuButton from '../components/menu.button';
 import styles from '../src/styles';
 
 export default class HowItWorks extends React.Component{
