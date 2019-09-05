@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
             loading:"flex",
             contactDetails:null,
             isFormSubmited:false,
-            listOfVid:[],
+            listOfVid:[]
         }
     }
 
@@ -71,18 +71,8 @@ export default class HomeScreen extends React.Component {
                 ]});
 
             }
-
+           this.getListOfVid(this.state.homeCards);
         });
-        vidLis = [];
-        this.state.homeCards.map((item, index)=>{
-            console.log('didMount');
-            firebase.database().ref(item.listName).once('value', (snapshot) =>{
-                vidLis.push(snapshot.val());
-                console.log(vidLis);
-            })
-        });
-        this.setState({listOfVid:vidLis});
-        console.log(this.state.listOfVid);
     }
 
     async componentDidMount(){
@@ -112,12 +102,14 @@ export default class HomeScreen extends React.Component {
         }
     }
 
-    getListOfVid = (key) =>{
-        firebase.database().ref(key).once('value', (snapshot)=>{
-            listOfVid = snapshot.val();
+    getListOfVid = (list) =>{
+        vidLis = [];
+        list.map((item, index)=>{
+            firebase.database().ref(item.listName).once('value', (snapshot) =>{
+                vidLis.push(snapshot.val());
+            })
         });
-        return listOfVid;
-       
+        this.setState({listOfVid:vidLis});
     }
 
     render(){
@@ -205,11 +197,9 @@ export default class HomeScreen extends React.Component {
                             <Left>
                               <Button transparent 
                                onPress = {() => {
-                                   //Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"cta"});
-                                   //this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text})
-                                   
-                                   console.log(this.state.listOfVid);
-                                   //this.props.navigation.navigate('Learn', {vUrl:ytPrefix+vidLis[0].ytId, vId:0, vForm:vidLis[0].form ,vLis:vidLis});
+                                   Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"cta"});
+                                   listOfVid=this.state.listOfVid;
+                                   this.props.navigation.navigate('Learn', {vUrl:ytPrefix+vidLis[index][0].ytId, vId:0, vForm:vidLis[index][0].form ,vLis:vidLis[index]});
                                    }
                                    }>
                                 <Icon active name ="md-videocam"/>
