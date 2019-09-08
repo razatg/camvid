@@ -6,6 +6,7 @@ import {Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left,
 import {Video, AppLoading} from 'expo';
 import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
 
 import firebase from '../init/firebaseInit';
 import Amplitude from '../init/amplitudeInit';
@@ -38,6 +39,7 @@ export default class HomeScreen extends React.Component {
             loading:"flex",
             contactDetails:null,
             isFormSubmited:false,
+            contestEntered:false,
             listOfVid:[]
         }
     }
@@ -81,6 +83,14 @@ export default class HomeScreen extends React.Component {
             Roboto_medium: require('../node_modules/native-base/Fonts/Roboto_medium.ttf'),
           });
         this.setState({isReady:true});
+        SecureStore.getItemAsync('contestInfo').then(
+            (contestObj) => {
+                let contestJson = JSON.parse(contestObj);
+                if(contestJson){
+                    this.setState({contestEntered:contestJson.entered});
+                }
+            }
+        );
       } 
     
     postContact = () =>{
@@ -89,10 +99,20 @@ export default class HomeScreen extends React.Component {
             firebase.database().ref('liveWaitList').push({
                 contactDetails
             }).then((data)=>{
-                this.setState({isFormSubmited:true})
+                this.setState({isFormSubmited:true});
+                Amplitude.setUserId(contactDetails);
             }).catch((error)=>{
+                console.log('Contact Firebase Issue', error);
 
-            })
+            });
+            Alert.alert(
+                'You are in!',
+                'Please note you need to learn Yoga on the app for min 30 mins, to be eligible. Winners announced every week!',[
+                 {text: 'OK', onPress: () => console.log('Ok Pressed'), style: 'cancel'},],
+                { cancelable: false });
+            SecureStore.setItemAsync('contestInfo', JSON.stringify({entered:true}));
+
+            
         }else{
             Alert.alert(
                 'Oops !',
@@ -118,6 +138,7 @@ export default class HomeScreen extends React.Component {
               <AppLoading/>
             );
           }
+        
 
         return(
             <Container>
@@ -128,45 +149,43 @@ export default class HomeScreen extends React.Component {
                     size = 'large'
                    />
                </View>
-               {(this.state.isFormSubmited)
-               ?
-               <Card>
-                   <CardItem bordered>
-                     <Left>
-                       <Icon active name ="md-checkmark-circle-outline" style={{color:"green"}}/>
-                       <Text>Thanks! </Text>
-                      </Left> 
-                   </CardItem>
-                   <CardItem>
+               {(this.state.contestEntered)?
+                 <View></View>:
+                (this.state.isFormSubmited)?
+                  <Card>
+                     <CardItem bordered>
                        <Left>
-                       <Text>We will get back to you soon!</Text>
+                         <Icon active name ="md-checkmark-circle-outline" style={{color:"green"}}/>
+                         <Text>You are In! </Text>
+                        </Left> 
+                     </CardItem>
+                     <CardItem>
+                       <Left>
+                       <Text>Winners announced every week!</Text>
                        </Left>
-                   </CardItem>
-                    
-                </Card>
-               :
-               <Card>
-                   <CardItem bordered>
-                     <Left>
-                      <Icon active name ="md-calendar"/> 
-                       <Text>Join Wait List for the Live Class</Text>
-                     </Left>
-                   </CardItem>
-                    <Form>
-                        <Item inlineLabel>
+                    </CardItem>
+                  </Card>:
+                     <Card>
+                        <CardItem bordered>
+                           <Left>
+                             <Icon active name ="md-ribbon"/> 
+                              <Text>Healthy-Wealthy contest: Top 3 users(by time) get Rs.1000 coupons every week.</Text>
+                          </Left>
+                        </CardItem>
+                        <Form>
+                          <Item inlineLabel>
                           <Input placeholder = "Email/Phone" onChangeText ={(contactDetails) => this.setState({contactDetails})}/>
                           <Button info 
                            onPress = {()=> {
-                               Amplitude.logEvent('LiveRegister');
+                               Amplitude.logEvent('TryRegister');
                                this.postContact(this.state.contactDetails);
                                }
                                }>
                             <Text>I'am In</Text>
-                        </Button>
-                        </Item>
-                        
+                           </Button>
+                          </Item>
                      </Form>
-                </Card>
+                    </Card>
                }
 
                <Content >
