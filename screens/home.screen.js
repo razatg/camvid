@@ -7,6 +7,8 @@ import {Video, AppLoading} from 'expo';
 import * as Font from 'expo-font';
 import {Ionicons} from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
+import {Notifications} from 'expo';
+import * as Permissions from 'expo-permissions';
 
 import firebase from '../init/firebaseInit';
 import Amplitude from '../init/amplitudeInit';
@@ -44,6 +46,33 @@ export default class HomeScreen extends React.Component {
         }
     }
 
+    async obtainNotificationPermissions(){
+        let noticePermission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        console.log(noticePermission.status);
+        if (noticePermission.status != "granted") {
+            console.log('Notification permsisson not granted');
+        }
+        return noticePermission;
+    }
+
+    async scheduleNotification(){
+        await this.obtainNotificationPermissions();
+        notificationId = Notifications.scheduleLocalNotificationAsync(
+            {
+                title: "YoMo - Yoga: Watch yourself on Camera and Learn",
+                body:"More Yoga 🧘🏽 = More Money 🤑. Get ₹ 1 for 1 minute spent on learning. Just place your mobile on an elevated 🔭place in front of your yoga mat and start! ",
+                android:{
+                    icon:"../assets/noticeIcon.png",
+                    sound:false
+                }
+            },
+            {
+                time : (new Date()).getTime() + (1000*60)
+            }
+        ).catch((error)=> console.log(error));
+        console.log(notificationId);
+    }
+
     componentWillMount(){
         firebase.database().ref('homeCards').once('value', (snapshot) =>{
             if (snapshot != null && snapshot != ""){
@@ -77,6 +106,8 @@ export default class HomeScreen extends React.Component {
         });
     }
 
+
+
     async componentDidMount(){
         await Font.loadAsync({
             Roboto: require('../node_modules/native-base/Fonts/Roboto.ttf'),
@@ -91,6 +122,29 @@ export default class HomeScreen extends React.Component {
                 }
             }
         );
+        
+
+
+        SecureStore.getItemAsync('firstOpen').then(
+            (foObject) => {
+                if (foObject == null){
+                    console.log('First time user, setting notification!')
+                    this.scheduleNotification();
+                    SecureStore.setItemAsync('firstOpen', JSON.stringify({isFirstOpen:true}));
+                }else{
+                    let foJson = JSON.parse(foObject);
+                    foBool = foJson.isFirstOpen;
+                     if (foBool){
+                    //SecureStore.deleteItemAsync('firstOpen')
+                       console.log('Repeat user, not setting notification again!')
+                     }
+                }
+                
+            }
+        ).catch((error) => {
+            console.log(error);
+        });
+        
       } 
     
     postContact = () =>{
@@ -107,7 +161,7 @@ export default class HomeScreen extends React.Component {
             });
             Alert.alert(
                 'You are in!',
-                'Please note you need to learn Yoga on the app for min 30 mins, to be eligible. Winners announced every week!',[
+                'Please note you need to learn Yoga on the app for min 30 mins, to be eligible. Winners paid every week!',[
                  {text: 'OK', onPress: () => console.log('Ok Pressed'), style: 'cancel'},],
                 { cancelable: false });
             SecureStore.setItemAsync('contestInfo', JSON.stringify({entered:true}));
@@ -161,7 +215,7 @@ export default class HomeScreen extends React.Component {
                      </CardItem>
                      <CardItem>
                        <Left>
-                       <Text>Winners announced every week!</Text>
+                       <Text>Winners paid every week!</Text>
                        </Left>
                     </CardItem>
                   </Card>:
@@ -169,7 +223,7 @@ export default class HomeScreen extends React.Component {
                         <CardItem bordered>
                            <Left>
                              <Icon active name ="md-ribbon"/> 
-                              <Text>Healthy-Wealthy contest: Top 3 users(by time) get Rs.1000 coupons every week.</Text>
+                              <Text>Get ₹ 1 for 1 minute spent on Yoga: Healthy-Wealthy offer.</Text>
                           </Left>
                         </CardItem>
                         <Form>
@@ -204,7 +258,8 @@ export default class HomeScreen extends React.Component {
                          button
                          onPress = {() => {
                              Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"img"})
-                             this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text});
+                             //this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text});
+                             this.props.navigation.navigate('Learn', {vUrl:ytPrefix+vidLis[index][0].ytId, vId:0, vForm:vidLis[index][0].form ,vLis:vidLis[index]});
                              }
                              }>
                              <Image

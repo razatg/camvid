@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Image,ActivityIndicator } from 'react-native';
 import {Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right} from 'native-base';
 
-import {Video, AppLoading} from 'expo';
+import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
-import {Ionicons} from '@expo/vector-icons';
 
 import firebase from '../init/firebaseInit';
 import Amplitude from '../init/amplitudeInit';
@@ -154,7 +153,7 @@ export default class ListVideo extends React.Component {
                 <Left>
                 <Button transparent 
                   onPress = {() => {
-                    Amplitude.logEventWithProperties("ListofVidCard",{cardName:item.text, typeTouch:"cta"})
+                    Amplitude.logEventWithProperties("ListOfVidCard",{cardName:item.text, typeTouch:"cta"})
                     this.props.navigation.navigate('Learn', {vUrl:ytPrefix+item.ytId, vId:index,vForm:item.form ,vLis:this.state.listOfVid});
                     }
                     }>
