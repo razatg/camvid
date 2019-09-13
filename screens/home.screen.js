@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image,ActivityIndicator, Alert } from 'react-native';
+import { View, Image,ActivityIndicator, Alert, ToastAndroid } from 'react-native';
 
 import {Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Form, Item, Label, Input, Title} from 'native-base';
 
@@ -59,8 +59,8 @@ export default class HomeScreen extends React.Component {
         await this.obtainNotificationPermissions();
         notificationId = Notifications.scheduleLocalNotificationAsync(
             {
-                title: "YoMo - Yoga: Watch yourself on Camera and Learn",
-                body:"More Yoga 🧘🏽 = More Money 🤑. Get ₹ 1 for 1 minute spent on learning. Just place your mobile on an elevated 🔭place in front of your yoga mat and start! ",
+                title: "Watch yourself on Camera and Learn",
+                body:"Just place your mobile on an elevated 🔭place in front of your yoga mat and start!. What's more Get ₹ 1 for 1 minute spent on learning. More Yoga 🧘🏽 = More Money 🤑  ",
                 android:{
                     icon:"../assets/noticeIcon.png",
                     sound:false
@@ -72,6 +72,17 @@ export default class HomeScreen extends React.Component {
         ).catch((error)=> console.log(error));
         console.log(notificationId);
     }
+
+    getRandomInt = () => {
+        return Math.floor((Math.random()* 9) + 1);
+    }
+
+    socialProof = () => {
+        Amplitude.logEvent("LearnShortCapture");
+        ToastAndroid.showWithGravity("You are in good company " +this.getRandomInt() + " others are performing Asanas from this list!",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER);
+      }
 
     componentWillMount(){
         firebase.database().ref('homeCards').once('value', (snapshot) =>{
@@ -258,6 +269,7 @@ export default class HomeScreen extends React.Component {
                          button
                          onPress = {() => {
                              Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"img"})
+                             this.socialProof();
                              //this.props.navigation.navigate('List',{listName:item.listName,listTitle:item.text});
                              this.props.navigation.navigate('Learn', {vUrl:ytPrefix+vidLis[index][0].ytId, vId:0, vForm:vidLis[index][0].form ,vLis:vidLis[index]});
                              }
@@ -272,6 +284,7 @@ export default class HomeScreen extends React.Component {
                               <Button transparent 
                                onPress = {() => {
                                    Amplitude.logEventWithProperties('HomeCard',{cardName:item.listName, typeTouch:"cta"});
+                                   this.socialProof();
                                    listOfVid=this.state.listOfVid;
                                    this.props.navigation.navigate('Learn', {vUrl:ytPrefix+vidLis[index][0].ytId, vId:0, vForm:vidLis[index][0].form ,vLis:vidLis[index]});
                                    }
