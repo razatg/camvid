@@ -2,6 +2,7 @@ import React from 'react';;
 import {Text, View, Header, Linking} from 'react-native';
 
 import styles from '../src/styles';
+import Amplitude from '../init/amplitudeInit';
 
 export default class AboutScreen extends React.Component{
 
@@ -12,6 +13,7 @@ export default class AboutScreen extends React.Component{
   };
 
   render (){
+    Amplitude.logEvent('AboutLoad');
     return(
       <View style={styles.container}>
         <Text style = {styles.pcontaineer}>

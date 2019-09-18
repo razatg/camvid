@@ -60,14 +60,14 @@ export default class HomeScreen extends React.Component {
         notificationId = Notifications.scheduleLocalNotificationAsync(
             {
                 title: "Watch yourself on Camera and Learn",
-                body:"Just place your mobile on an elevated 🔭place in front of your yoga mat and start!. What's more Get ₹ 1 for 1 minute spent on learning. More Yoga 🧘🏽 = More Money 🤑  ",
+                body:"Just place your mobile on an elevated 🔭place in front of your yoga mat and start! Do Yoga at your own pace and learn from the best.",
                 android:{
                     icon:"../assets/noticeIcon.png",
                     sound:false
                 }
             },
             {
-                time : (new Date()).getTime() + (1000*60)
+                time : (new Date()).getTime() + (1000*60*60*24)
             }
         ).catch((error)=> console.log(error));
         console.log(notificationId);
@@ -78,20 +78,19 @@ export default class HomeScreen extends React.Component {
     }
 
     socialProof = () => {
-        Amplitude.logEvent("LearnShortCapture");
         ToastAndroid.showWithGravity("You are in good company " +this.getRandomInt() + " others are performing Asanas from this list!",
           ToastAndroid.LONG,
           ToastAndroid.CENTER);
       }
 
     componentWillMount(){
-        firebase.database().ref('homeCards').once('value', (snapshot) =>{
+    
+        firebase.database().ref('homeCards').orderByChild('id').once('value', (snapshot) =>{
             if (snapshot != null && snapshot != ""){
-                this.setState({
-                    homeCards:snapshot.val(),
-                    loading:"none"
+                snapshot.forEach(data => {
+                    this.state.homeCards.push(data.val());
+                    this.setState({ loading: "none" });
                 });
-
             }else {
                 this.setState({homeCards:[
                         {

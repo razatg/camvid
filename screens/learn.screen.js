@@ -129,7 +129,7 @@ export default class LearnVideo extends React.Component {
   }
 
   render() {
-    Amplitude.logEvent('LearnLoad')
+    Amplitude.logEvent('LearnLoad');
     vurl = this.props.navigation.getParam('vUrl');
     return (
      <React.Fragment>

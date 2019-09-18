@@ -2,10 +2,12 @@ import React from 'react';
 import {Text, View, Linking} from 'react-native'
 
 import styles from '../src/styles';
+import Amplitude from '../init/amplitudeInit';
 
 
 export default class UpgradeScreen extends React.Component {
   render (){
+    Amplitude.logEvent('UpgradeLoad');
     return(
       <View style={styles.container}>
         <Text style = {styles.pcontaineer}>
